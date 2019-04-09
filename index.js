@@ -22,25 +22,26 @@ function onslaughtOfFiends(presentHorde) {
   while (monsterBox.firstChild) {
     monsterBox.firstChild.remove();
   }
-  fetch(MONSTERS)
+  fetch(MONSTERS + `?_limit=50&_page=${presentHorde}`)
     .then(resp => resp.json())
     .then(monsters =>
-      monsters.slice(presentHorde, presentHorde + 50).forEach(monster => {
+      monsters.forEach(monster => {
+        console.log(monster.id);
         summonMonster(monster);
       })
     );
 }
 document.addEventListener("DOMContentLoaded", () => {
-  let presentHorde = 0;
+  let presentHorde = 1;
   onslaughtOfFiends(presentHorde);
 
   forbiddenScroll.addEventListener("submit", foolishActOfHubris);
   theyreRightBehindYouRunRunRun.addEventListener("click", () => {
-    presentHorde += 50;
+    presentHorde += 1;
     onslaughtOfFiends(presentHorde);
   });
   turnBackNowBeforeItsTooLate.addEventListener("click", () => {
-    presentHorde -= 50;
+    presentHorde -= 1;
     onslaughtOfFiends(presentHorde);
   });
 });
